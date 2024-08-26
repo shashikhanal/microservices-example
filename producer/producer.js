@@ -1,8 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const kafka = require('kafka-node');
 
 // Initialize Express
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 const port = 4000;
 
 // Create a Kafka client and producer
@@ -13,11 +15,11 @@ kafkaProducer.on('ready', () => {
 	console.log('Kafka Producer is connected and ready.');
 
 	// Express route to send a message to the Kafka topic
-	app.get('/send', (req, res) => {
+	app.post('/send', (req, res) => {
 		const payloads = [
 			{
 				topic: 'my-topic',
-				messages: 'Kafka message from API hit!',
+				messages: req.body.message,
 			},
 		];
 

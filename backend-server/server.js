@@ -12,12 +12,6 @@ const io = socketIo(server, {
 	}
 });
 
-app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', 'http://localhost'); // Replace with your frontend origin
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	next();
-});
-
 const kafkaHost = 'kafka:9093';
 const topicName = 'my-topic';
 const retryInterval = 5000;

@@ -14,9 +14,9 @@ const App: React.FC = () => {
 		});
 
 		// Listen for messages from the server
-		socket.on('data', (message: string) => {
+		socket.on('data', (message: { topic: string, value: string}) => {
 			console.log('Received data:', message);
-			setData(message);
+			setData(message.value || 'Error: value property is not set');
 		});
 
 		// Cleanup on component unmount

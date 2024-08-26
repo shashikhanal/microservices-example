@@ -22,6 +22,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_CONFLUENT_SUPPORT_METRICS_ENABLE: "false"
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+    command: "sh -c 'exec /usr/bin/start-kafka.sh & sleep 5 && kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic my-topic && tail -f /dev/null'"
     networks:
       - kafka-net
     depends_on:
@@ -56,7 +57,7 @@ services:
     ports:
       - "4001:4001"
     depends_on:
-      - producer
+      - kafka
     networks:
       - kafka-net
 

@@ -26,8 +26,8 @@ const App: React.FC = () => {
 	}, []);
 
 	return (
-		<div>
-			<h1>Real-Time Data from Kafka</h1>
+		<div className="message-container">
+			<h1>Real-Time Orders</h1>
 			<p>{data}</p>
 		</div>
 	);

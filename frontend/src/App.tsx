@@ -2,9 +2,21 @@ import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
 const App: React.FC = () => {
-	const [data, setData] = useState<string>('No data!');
+	const [data, setData] = useState<{ [key: number]: string }>({});
 
 	useEffect(() => {
+		const handleIncomingData = (value: string) => {
+			setData(prevData => {
+				const index: number = Object.keys(prevData).length;
+				console.log('Inside handle Incoming data. PrevData: ', prevData);
+
+				return {
+					...prevData,
+					[index]: value
+				};
+			});
+		}
+
 		console.log('Frontend loaded!');
 		// Connect to the WebSocket server
 		const socket = io('http://localhost:4001');
@@ -16,7 +28,8 @@ const App: React.FC = () => {
 		// Listen for messages from the server
 		socket.on('data', (message: { topic: string, value: string}) => {
 			console.log('Received data:', message);
-			setData(message.value || 'Error: value property is not set');
+
+			handleIncomingData(message.value);
 		});
 
 		// Cleanup on component unmount
@@ -28,7 +41,13 @@ const App: React.FC = () => {
 	return (
 		<div className="message-container">
 			<h1>Real-Time Orders</h1>
-			<p>{data}</p>
+			<ul>
+				{Object.entries(data).map(([key, value], index) => (
+					<li key={index}>
+						<p>{value}</p>
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 };

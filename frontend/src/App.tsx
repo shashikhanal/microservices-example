@@ -8,7 +8,6 @@ const App: React.FC = () => {
 		const handleIncomingData = (value: string) => {
 			setData(prevData => {
 				const index: number = Object.keys(prevData).length;
-				console.log('Inside handle Incoming data. PrevData: ', prevData);
 
 				return {
 					...prevData,

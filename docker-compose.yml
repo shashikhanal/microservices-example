@@ -48,9 +48,6 @@ services:
       - kafka
     networks:
       - kafka-net
-    volumes:
-      - ./producer:/app # Mount the local 'producer' directory to '/app' inside the container
-      - /app/node_modules # Prevent overwriting of 'node_modules' inside the container
 
   # A simple Node.js server that connects to Kafka and exposes WebSocket API
   backend-server:
